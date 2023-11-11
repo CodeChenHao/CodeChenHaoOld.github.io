@@ -18,7 +18,7 @@ tags: Docker
 
 ## 二、Docker的安装
 
-```
+```shell
 # 1、yum 包更新到最新 
 yum update
 # 2、安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的 
@@ -42,7 +42,7 @@ docker -v
 	4.按"镜像加速器"s中的命令执行操作
 ```
 
-```
+```shell
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
@@ -121,25 +121,25 @@ docker run 参数
 
 ### 7.3	启动容器
 
-```
+```shell
 docker start 容器ID/容器名字
 ```
 
 ### 7.4	停止容器
 
-```
+```shell
 docker stop 容器ID/容器名字
 ```
 
 ### 7.5	删除容器
 
-```
+```shell
 docker rm 容器ID/容器名字
 ```
 
 ### 7.6	查看容器的详细信息
 
-```
+```shell
 docker inspect 容器ID/容器名字
 ```
 
@@ -194,14 +194,15 @@ docker run ... –v 宿主机目录(文件):容器内目录(文件) ...
 
 ### 8.4	配置数据卷容器
 
-```
+```shell
 1.创建启动c3数据卷容器，使用 –v 参数 设置数据卷
 docker run –it --name=c3 –v /volume centos:7 /bin/bash 
 ```
 
-```
+```shell
 2.创建启动 c1 c2 容器，使用 –-volumes-from 参数 设置数据卷
 docker run –it --name=c1 --volumes-from c3 centos:7 /bin/bash
 
 docker run –it --name=c2 --volumes-from c3 centos:7 /bin/bash  
 ```
+
