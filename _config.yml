@@ -1,11 +1,11 @@
 # Basic
 title: 江楠
 subtitle: 天道酬勤
-description: 运就像自己的掌纹，虽然弯弯曲曲，却永远掌握在自己手中。
+description: 命运就像自己的掌纹，虽然弯弯曲曲，却永远掌握在自己手中。
 # 头像里面的标题
 avatarTitle: Mr.Chen
 # 头像里面的描述
-avatarDesc: 天道酬勤
+avatarDesc: Java / Python
 url: "https://codechenhao.github.io/"
 
 # 博客是否自动生成目录，false为不生成
@@ -24,8 +24,6 @@ social:
     # zhihu: panpanleopard
     # juejin: xxx
     # jianshu: 2ada30d8d0f7
-    # twitter: 
-    mail: 1835824864@qq.com
 
 
 # 百度统计 
@@ -67,7 +65,7 @@ blog_button:
 nav:
     - {title: 所有文章, description: archive, url: '/archive'}   
     - {title: 标签, description: tags, url: '/tags'}       
-    - {title: 关于我, description: about, url: '/about'}   
+    #- {title: 关于我, description: about, url: '/about'}   
     
 
 # Pagination
