@@ -1,20 +1,20 @@
 # Basic
 title: 江楠
-subtitle: 个人站
-description: 欢迎来到我的个人站~
+subtitle: 天道酬勤
+description: 运就像自己的掌纹，虽然弯弯曲曲，却永远掌握在自己手中。
 # 头像里面的标题
 avatarTitle: Mr.Chen
 # 头像里面的描述
-avatarDesc: Java / Python
+avatarDesc: 天道酬勤
 url: "https://codechenhao.github.io/"
 
 # 博客是否自动生成目录，false为不生成
 enableToc: true
 
 # Comment
-comment:
+#comment:
     # livere: MTAyMC81MDk5NC8yNzQ3Ng  # https://www.livere.com
-    disqus: leopard
+    #disqus: leopard
     # uyan: 2143225  # 有言id,登录有言官网申请
 
 # Social
@@ -66,8 +66,7 @@ blog_button:
 # Navigation buttons in the front page.s
 nav:
     - {title: 所有文章, description: archive, url: '/archive'}   
-    - {title: 标签, description: tags, url: '/tags'}      
-    - {title: 技术支持, description: support, url: '/support'}      
+    - {title: 标签, description: tags, url: '/tags'}       
     - {title: 关于我, description: about, url: '/about'}   
     
 
