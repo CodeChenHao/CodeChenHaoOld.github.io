@@ -540,3 +540,97 @@ chmod u+s A
 chmod g+s A
 ```
 
+## 七、链接文件
+
+### 7.1	软连接
+
+```
+概念：软连接，是链接文件本身，可以理解为快捷方式，软链接对象指向源文件的地址，源文件再指向具体的物理地址，因此可以在不同的分区中创建软链接。当删除软连接对象时，不影响源文件的使用，当删除源文件时，链接对象失去作用。
+```
+
+```
+创建软连接：
+ln -s 源文件 链接文件
+如：ln -s /root/test.txt testlink
+```
+
+### 7.2	硬链接
+
+```
+概念：硬链接，使用inode链接，可以理解为硬链接对象和源文件指向同一块物理地址，因此只能在同一个分区使用。删除一处文件，不影响另外一处文件的使用。
+```
+
+```
+创建硬链接：
+ln 源文件 链接文件
+如：ln /root/test.txt testlink
+```
+
+## 八、命令别名
+
+```
+为什么会有命令别名？
+因为有时一些常用的命令比较长，导致使用不方便，这个时候就可以使用命令别名，简化使用。
+如：ll命令其实就是'ls -l --color=auto'的别名，执行ll，就相当于执行ls -l --color=auto
+```
+
+### 8.1	定义命令别名
+
+```
+alias 别名='命令'
+如：
+alias li='cat /etc/passwd'
+```
+
+### 8.2	删除命令别名
+
+```
+unalias 别名
+如：
+unalias li
+```
+
+### 8.3	查看系统中存在的命令别名
+
+```
+alias
+```
+
+## 九、sudo提权
+
+```
+sudo提权，指sudo根据指定的安全策略，让一个用户以其他用户的身份执行某个命令
+```
+
+### 9.1	sudo的配置文件
+
+```
+/etc/sudoers
+```
+
+### 9.2	sudo配置
+
+```
+格式：
+用户  主机=(身份)  NOPASSWD:能执行的命令列表
+含义： 某个用户可以以那些身份在那些主机上通过sudo提权的方式执行某些命令，NOPASSWD表示不需要输入其他身份的密码
+```
+
+```
+Cmd Alias NETADMINCMD=/usr/bin/passwd,/usr/sbin/useradd
+
+root ALL=(ALL) ALL
+user1 ALL=(ALL) /usr/bin/passwd,/usr/sbin/useradd
+user2 ALL=(ALL) NOPASSWD:/usr/bin/passwd,/usr/sbin/useradd
+user3 ALL=(ALL) NETADMINCMD
+```
+
+### 9.3	如何提权
+
+```
+sudo 命令
+```
+
+## 十、VI/VIM
+
+[参考菜鸟教程中的教程](https://www.runoob.com/linux/linux-vim.html)
