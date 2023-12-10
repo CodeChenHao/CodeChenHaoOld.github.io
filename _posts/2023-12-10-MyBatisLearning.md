@@ -2,7 +2,7 @@
 layout: post
 title: MyBatis学习
 description: MyBatis的简介、搭建MyBatis环境、配置文件详解、使用MyBatis增删改查、动态SQL、缓存、逆向工程、分页插件相关知识
-tags: 前端
+tags: MyBatis
 ---
 
 # Mybatis简介
@@ -42,29 +42,29 @@ tags: 前端
 - 打包方式：jar
 - 引入依赖
 
-	```xml
-	<dependencies>
-		<!-- Mybatis核心 -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.5.7</version>
+```xml
+<dependencies>
+	<!-- Mybatis核心 -->
+	<dependency>
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis</artifactId>
+		<version>3.5.7</version>
+	</dependency>
+	<!-- junit测试 -->
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.12</version>
+		<scope>test</scope>
+	</dependency>
+	<!-- MySQL驱动 -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.3</version>
 		</dependency>
-		<!-- junit测试 -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- MySQL驱动 -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.3</version>
-			</dependency>
-	</dependencies>
-	```
+</dependencies>
+```
 ## 创建MyBatis的核心配置文件
 >习惯上命名为`mybatis-config.xml`，这个文件名仅仅只是建议，并非强制要求。将来整合Spring之后，这个配置文件可以省略，所以大家操作时可以直接复制、粘贴。
 >核心配置文件主要用于配置连接数据库的环境以及MyBatis的全局配置信息
@@ -676,20 +676,31 @@ public void insertUser() {
 ```
 - 若字段名和实体类中的属性名不一致，但是字段名符合数据库的规则（使用_），实体类中的属性名符合Java的规则（使用驼峰）。此时也可通过以下两种方式处理字段名和实体类中的属性的映射关系  
 
-	1. 可以通过为字段起别名的方式，保证和实体类中的属性名保持一致  
-		```xml
-		<!--List<Emp> getAllEmp();-->
-		<select id="getAllEmp" resultType="Emp">
-			select eid,emp_name empName,age,sex,email from t_emp
-		</select>
-		```
+```
+1. 可以通过为字段起别名的方式，保证和实体类中的属性名保持一致  
+```
+
+```xml
+<!--List<Emp> getAllEmp();-->
+<select id="getAllEmp" resultType="Emp">
+    select eid,emp_name empName,age,sex,email from t_emp
+</select>
+```
+
+
+
 	2. 可以在MyBatis的核心配置文件中的`setting`标签中，设置一个全局配置信息mapUnderscoreToCamelCase，可以在查询表中数据时，自动将_类型的字段名转换为驼峰，例如：字段名user_name，设置了mapUnderscoreToCamelCase，此时字段名就会转换为userName。[核心配置文件详解](#核心配置文件详解)
-		```xml
-	<settings>
-	    <setting name="mapUnderscoreToCamelCase" value="true"/>
-	</settings>
-		```
+	
+```xml
+<settings>
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+</settings>
+```
+
+
+
 ## 多对一映射处理
+
 >查询员工信息以及员工所对应的部门信息
 ```java
 public class Emp {  
@@ -902,19 +913,19 @@ public void getEmpAndDeptByStepOne() {
 - 开启后，需要用到查询dept的时候才会调用相应的SQL语句![](/images/posts/2023-12-10-MyBatisLearning/延迟加载测试3.png)
 - fetchType：当开启了全局的延迟加载之后，可以通过该属性手动控制延迟加载的效果，fetchType="lazy(延迟加载)|eager(立即加载)"
 
-	```xml
-	<resultMap id="empAndDeptByStepResultMap" type="Emp">
-		<id property="eid" column="eid"></id>
-		<result property="empName" column="emp_name"></result>
-		<result property="age" column="age"></result>
-		<result property="sex" column="sex"></result>
-		<result property="email" column="email"></result>
-		<association property="dept"
-					 select="com.atguigu.mybatis.mapper.DeptMapper.getEmpAndDeptByStepTwo"
-					 column="did"
-					 fetchType="lazy"></association>
-	</resultMap>
-	```
+```xml
+<resultMap id="empAndDeptByStepResultMap" type="Emp">
+	<id property="eid" column="eid"></id>
+	<result property="empName" column="emp_name"></result>
+	<result property="age" column="age"></result>
+	<result property="sex" column="sex"></result>
+	<result property="email" column="email"></result>
+	<association property="dept"
+				 select="com.atguigu.mybatis.mapper.DeptMapper.getEmpAndDeptByStepTwo"
+				 column="did"
+				 fetchType="lazy"></association>
+</resultMap>
+```
 # 动态SQL
 - Mybatis框架的动态SQL技术是一种根据特定条件动态拼装SQL语句的功能，它存在的意义是为了解决拼接SQL语句字符串时的痛点问题
 ## if
@@ -968,15 +979,15 @@ public void getEmpAndDeptByStepOne() {
 ```
 - 注意：where标签不能去掉条件后多余的and/or
 
-	```xml
-	<!--这种用法是错误的，只能去掉条件前面的and/or，条件后面的不行-->
-	<if test="empName != null and empName !=''">
-	emp_name = #{empName} and
-	</if>
-	<if test="age != null and age !=''">
-		age = #{age}
-	</if>
-	```
+```xml
+<!--这种用法是错误的，只能去掉条件前面的and/or，条件后面的不行-->
+<if test="empName != null and empName !=''">
+emp_name = #{empName} and
+</if>
+<if test="age != null and age !=''">
+	age = #{age}
+</if>
+```
 ## trim
 - trim用于去掉或添加标签中的内容  
 - 常用属性
@@ -1063,51 +1074,60 @@ public void getEmpByChoose() {
 	- close：设置foreach标签中的内容的结束符
 - 批量删除
 
-	```xml
-	<!--int deleteMoreByArray(Integer[] eids);-->
-	<delete id="deleteMoreByArray">
-		delete from t_emp where eid in
-		<foreach collection="eids" item="eid" separator="," open="(" close=")">
-			#{eid}
-		</foreach>
-	</delete>
-	```
-	```java
-	@Test
-	public void deleteMoreByArray() {
-		SqlSession sqlSession = SqlSessionUtils.getSqlSession();
-		DynamicSQLMapper mapper = sqlSession.getMapper(DynamicSQLMapper.class);
-		int result = mapper.deleteMoreByArray(new Integer[]{6, 7, 8, 9});
-		System.out.println(result);
-	}
-	```
-	![](/images/posts/2023-12-10-MyBatisLearning/foreach测试结果1.png)
+```xml
+<!--int deleteMoreByArray(Integer[] eids);-->
+<delete id="deleteMoreByArray">
+	delete from t_emp where eid in
+	<foreach collection="eids" item="eid" separator="," open="(" close=")">
+		#{eid}
+	</foreach>
+</delete>
+```
+
+
+
+```java
+@Test
+public void deleteMoreByArray() {
+	SqlSession sqlSession = SqlSessionUtils.getSqlSession();
+	DynamicSQLMapper mapper = sqlSession.getMapper(DynamicSQLMapper.class);
+	int result = mapper.deleteMoreByArray(new Integer[]{6, 7, 8, 9});
+	System.out.println(result);
+}
+```
+![](/images/posts/2023-12-10-MyBatisLearning/foreach测试结果1.png)
+
 - 批量添加
 
-	```xml
-	<!--int insertMoreByList(@Param("emps") List<Emp> emps);-->
-	<insert id="insertMoreByList">
-		insert into t_emp values
-		<foreach collection="emps" item="emp" separator=",">
-			(null,#{emp.empName},#{emp.age},#{emp.sex},#{emp.email},null)
-		</foreach>
-	</insert>
-	```
-	```java
-	@Test
-	public void insertMoreByList() {
-		SqlSession sqlSession = SqlSessionUtils.getSqlSession();
-		DynamicSQLMapper mapper = sqlSession.getMapper(DynamicSQLMapper.class);
-		Emp emp1 = new Emp(null,"a",1,"男","123@321.com",null);
-		Emp emp2 = new Emp(null,"b",1,"男","123@321.com",null);
-		Emp emp3 = new Emp(null,"c",1,"男","123@321.com",null);
-		List<Emp> emps = Arrays.asList(emp1, emp2, emp3);
-		int result = mapper.insertMoreByList(emps);
-		System.out.println(result);
-	}
-	```
-	![](/images/posts/2023-12-10-MyBatisLearning/foreach测试结果2.png)
+```xml
+<!--int insertMoreByList(@Param("emps") List<Emp> emps);-->
+<insert id="insertMoreByList">
+	insert into t_emp values
+	<foreach collection="emps" item="emp" separator=",">
+		(null,#{emp.empName},#{emp.age},#{emp.sex},#{emp.email},null)
+	</foreach>
+</insert>
+```
+
+
+
+```java
+@Test
+public void insertMoreByList() {
+	SqlSession sqlSession = SqlSessionUtils.getSqlSession();
+	DynamicSQLMapper mapper = sqlSession.getMapper(DynamicSQLMapper.class);
+	Emp emp1 = new Emp(null,"a",1,"男","123@321.com",null);
+	Emp emp2 = new Emp(null,"b",1,"男","123@321.com",null);
+	Emp emp3 = new Emp(null,"c",1,"男","123@321.com",null);
+	List<Emp> emps = Arrays.asList(emp1, emp2, emp3);
+	int result = mapper.insertMoreByList(emps);
+	System.out.println(result);
+}
+```
+![](/images/posts/2023-12-10-MyBatisLearning/foreach测试结果2.png)
+
 ## SQL片段
+
 - sql片段，可以记录一段公共sql片段，在使用的地方通过include标签进行引入
 - 声明sql片段：`<sql>`标签
 ```xml
@@ -1504,12 +1524,12 @@ public void testPageHelper() throws IOException {
 ```
 - 分页相关数据：
 
-	```
-	PageInfo{
-	pageNum=1, pageSize=4, size=4, startRow=1, endRow=4, total=8, pages=2, 
-	list=Page{count=true, pageNum=1, pageSize=4, startRow=0, endRow=4, total=8, pages=2, reasonable=false, pageSizeZero=false}[Emp{eid=1, empName='admin', age=22, sex='男', email='456@qq.com', did=3}, Emp{eid=2, empName='admin2', age=22, sex='男', email='456@qq.com', did=3}, Emp{eid=3, empName='王五', age=12, sex='女', email='123@qq.com', did=3}, Emp{eid=4, empName='赵六', age=32, sex='男', email='123@qq.com', did=1}], 
-	prePage=0, nextPage=2, isFirstPage=true, isLastPage=false, hasPreviousPage=false, hasNextPage=true, navigatePages=5, navigateFirstPage=1, navigateLastPage=2, navigatepageNums=[1, 2]}
-	```
+```json
+PageInfo{
+pageNum=1, pageSize=4, size=4, startRow=1, endRow=4, total=8, pages=2, 
+list=Page{count=true, pageNum=1, pageSize=4, startRow=0, endRow=4, total=8, pages=2, reasonable=false, pageSizeZero=false}[Emp{eid=1, empName='admin', age=22, sex='男', email='456@qq.com', did=3}, Emp{eid=2, empName='admin2', age=22, sex='男', email='456@qq.com', did=3}, Emp{eid=3, empName='王五', age=12, sex='女', email='123@qq.com', did=3}, Emp{eid=4, empName='赵六', age=32, sex='男', email='123@qq.com', did=1}], 
+prePage=0, nextPage=2, isFirstPage=true, isLastPage=false, hasPreviousPage=false, hasNextPage=true, navigatePages=5, navigateFirstPage=1, navigateLastPage=2, navigatepageNums=[1, 2]}
+```
 - 其中list中的数据等同于方法一中直接输出的page数据
 #### 常用数据：
 - pageNum：当前页的页码  
