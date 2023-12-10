@@ -7,16 +7,19 @@ tags: MyBatis
 
 # Mybatis简介
 ## MyBatis历史
--    MyBatis最初是Apache的一个开源项目iBatis, 2010年6月这个项目由Apache Software Foundation迁移到了Google Code。随着开发团队转投Google Code旗下，iBatis3.x正式更名为MyBatis。代码于2013年11月迁移到Github
+- MyBatis最初是Apache的一个开源项目iBatis, 2010年6月这个项目由Apache Software Foundation迁移到了Google Code。随着开发团队转投Google Code旗下，iBatis3.x正式更名为MyBatis。代码于2013年11月迁移到Github
 - iBatis一词来源于“internet”和“abatis”的组合，是一个基于Java的持久层框架。iBatis提供的持久层框架包括SQL Maps和Data Access Objects（DAO）
+
 ## MyBatis特性
 1. MyBatis 是支持定制化 SQL、存储过程以及高级映射的优秀的持久层框架
 2. MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集
 3. MyBatis可以使用简单的XML或注解用于配置和原始映射，将接口和Java的POJO（Plain Old Java Objects，普通的Java对象）映射成数据库中的记录
 4. MyBatis 是一个 半自动的ORM（Object Relation Mapping）框架
+
 ## MyBatis下载
 - [MyBatis下载地址](https://github.com/mybatis/mybatis-3)
 - ![](/images/posts/2023-12-10-MyBatisLearning/MyBatis下载.png)
+
 ## 和其它持久化层技术对比
 - JDBC  
 	- SQL 夹杂在Java代码中耦合度高，导致硬编码内伤  
@@ -32,12 +35,14 @@ tags: MyBatis
 	- 轻量级，性能出色  
 	- SQL 和 Java 编码分开，功能边界清晰。Java代码专注业务、SQL语句专注数据  
 	- 开发效率稍逊于HIbernate，但是完全能够接受
+
 # 搭建MyBatis
 ## 开发环境
 - IDE：idea 2019.2  
 - 构建工具：maven 3.5.4  
 - MySQL版本：MySQL 5.7  
 - MyBatis版本：MyBatis 3.5.7
+
 ## 创建maven工程
 - 打包方式：jar
 - 引入依赖
@@ -69,6 +74,7 @@ tags: MyBatis
 >习惯上命名为`mybatis-config.xml`，这个文件名仅仅只是建议，并非强制要求。将来整合Spring之后，这个配置文件可以省略，所以大家操作时可以直接复制、粘贴。
 >核心配置文件主要用于配置连接数据库的环境以及MyBatis的全局配置信息
 >核心配置文件存放的位置是src/main/resources目录下
+>
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE configuration  
@@ -126,6 +132,7 @@ public interface UserMapper {
 - MyBatis中可以面向接口操作数据，要保证两个一致
 	- mapper接口的全类名和映射文件的命名空间（namespace）保持一致
 	- mapper接口中方法的方法名和映射文件中编写SQL的标签的id属性保持一致
+
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper  
@@ -142,6 +149,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 - SqlSession：代表Java程序和数据库之间的会话。（HttpSession是Java程序和浏览器之间的会话）
 - SqlSessionFactory：是“生产”SqlSession的“工厂”
 - 工厂模式：如果创建某一个对象，使用的过程基本固定，那么我们就可以把创建这个对象的相关代码封装到一个“工厂类”中，以后都使用这个工厂类来“生产”我们需要的对象
+
 ```java
 public class UserMapperTest {
     @Test
@@ -690,7 +698,7 @@ public void insertUser() {
 
 
 	2. 可以在MyBatis的核心配置文件中的`setting`标签中，设置一个全局配置信息mapUnderscoreToCamelCase，可以在查询表中数据时，自动将_类型的字段名转换为驼峰，例如：字段名user_name，设置了mapUnderscoreToCamelCase，此时字段名就会转换为userName。[核心配置文件详解](#核心配置文件详解)
-	
+
 ```xml
 <settings>
     <setting name="mapUnderscoreToCamelCase" value="true"/>
