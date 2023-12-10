@@ -518,11 +518,11 @@ public void checkLoginByParam() {
 
 # 七、MyBatis的各种查询功能
 ```
-1. 如果查询出的数据只有一条,可以通过
+如果查询出的数据只有一条,可以通过
    1. 实体类对象接收
    2. List集合接收
    3. Map集合接收，结果{password=123456, sex=男, id=1, age=23, username=admin}
-2. 如果查询出的数据有多条，一定不能用实体类对象接收，会抛异常TooManyResultsException，可以通过
+如果查询出的数据有多条，一定不能用实体类对象接收，会抛异常TooManyResultsException，可以通过
    1. 实体类类型的LIst集合接收
    2. Map类型的LIst集合接收
    3. 在mapper接口的方法上添加@MapKey注解
@@ -1330,10 +1330,13 @@ readOnly属性：只读，true/false
 ```
 
 ## 11.4 MyBatis缓存查询的顺序
-- 先查询二级缓存，因为二级缓存中可能会有其他程序已经查出来的数据，可以拿来直接使用  
-- 如果二级缓存没有命中，再查询一级缓存  
-- 如果一级缓存也没有命中，则查询数据库  
-- SqlSession关闭之后，一级缓存中的数据会写入二级缓存
+```
+先查询二级缓存，因为二级缓存中可能会有其他程序已经查出来的数据，可以拿来直接使用  
+如果二级缓存没有命中，再查询一级缓存  
+如果一级缓存也没有命中，则查询数据库  
+SqlSession关闭之后，一级缓存中的数据会写入二级缓存
+```
+
 ## 11.5 整合第三方缓存EHCache（了解）
 ### 11.5.1 添加依赖
 ```
@@ -1359,7 +1362,10 @@ readOnly属性：只读，true/false
 | logback-classic | 支持SLF4J门面接口的一个具体实现 |
 
 ### 11.5.3 创建EHCache的配置文件ehcache.xml
-- 名字必须叫`ehcache.xml`
+```
+名字必须叫ehcache.xml
+```
+
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1379,12 +1385,18 @@ readOnly属性：只读，true/false
 </ehcache>
 ```
 ### 11.5.4 设置二级缓存的类型
-- 在xxxMapper.xml文件中设置二级缓存类型
+```
+在xxxMapper.xml文件中设置二级缓存类型
+```
+
 ```xml
 <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 ```
 ### 11.5.5 加入logback日志
-- 存在SLF4J时，作为简易日志的log4j将失效，此时我们需要借助SLF4J的具体实现logback来打印日志。创建logback的配置文件`logback.xml`，名字固定，不可改变
+```
+存在SLF4J时，作为简易日志的log4j将失效，此时我们需要借助SLF4J的具体实现logback来打印日志。创建logback的配置文件logback.xml，名字固定，不可改变
+```
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
@@ -1521,7 +1533,10 @@ readOnly属性：只读，true/false
 </configuration>
 ```
 ### 12.1.3 创建逆向工程的配置文件
-- 文件名必须是：`generatorConfig.xml`
+```
+文件名必须是：generatorConfig.xml
+```
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
@@ -1603,13 +1618,17 @@ example.or().xxx：将之前添加的条件通过or拼接其他条件
 ```
 ![](/images/posts/2023-12-10-MyBatisLearning/example测试结果.png)
 ### 12.2.2 增改
-- `updateByPrimaryKey`：通过主键进行数据修改，如果某一个值为null，也会将对应的字段改为null
-	- `mapper.updateByPrimaryKey(new Emp(1,"admin",22,null,"456@qq.com",3));`
+```
+updateByPrimaryKey：通过主键进行数据修改，如果某一个值为null，也会将对应的字段改为null
+	mapper.updateByPrimaryKey(new Emp(1,"admin",22,null,"456@qq.com",3));
+```
 
 ![](/images/posts/2023-12-10-MyBatisLearning/增删改测试结果1.png)
 
-- `updateByPrimaryKeySelective()`：通过主键进行选择性数据修改，如果某个值为null，则不修改这个字段
-  - `mapper.updateByPrimaryKeySelective(new Emp(2,"admin2",22,null,"456@qq.com",3));`
+```
+updateByPrimaryKeySelective()：通过主键进行选择性数据修改，如果某个值为null，则不修改这个字段
+	mapper.updateByPrimaryKeySelective(new Emp(2,"admin2",22,null,"456@qq.com",3));
+```
 
 ![](/images/posts/2023-12-10-MyBatisLearning/增删改测试结果2.png)
 
@@ -1625,7 +1644,9 @@ example.or().xxx：将之前添加的条件通过or拼接其他条件
 </dependency>
 ```
 ### 13.1.2 配置分页插件
-- 在MyBatis的核心配置文件（mybatis-config.xml）中配置插件
+```
+在MyBatis的核心配置文件（mybatis-config.xml）中配置插件
+```
 
 ![](/images/posts/2023-12-10-MyBatisLearning/配置分页插件.png)
 
