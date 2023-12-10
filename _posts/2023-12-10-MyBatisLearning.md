@@ -5,14 +5,14 @@ description: MyBatis的简介、搭建MyBatis环境、配置文件详解、使�
 tags: MyBatis
 ---
 
-# Mybatis简介
-## MyBatis历史
+# 一、Mybatis简介
+## 1.1 MyBatis历史
 ```
 MyBatis最初是Apache的一个开源项目iBatis, 2010年6月这个项目由Apache Software Foundation迁移到了Google Code。随着开发团队转投Google Code旗下，iBatis3.x正式更名为MyBatis。代码于2013年11月迁移到Github。
 iBatis一词来源于“internet”和“abatis”的组合，是一个基于Java的持久层框架。iBatis提供的持久层框架包括SQL Maps和Data Access Objects(DAO)
 ```
 
-## MyBatis特性
+## 1.2 MyBatis特性
 ```
 1. MyBatis 是支持定制化 SQL、存储过程以及高级映射的优秀的持久层框架
 2. MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集
@@ -20,31 +20,31 @@ iBatis一词来源于“internet”和“abatis”的组合，是一个基于Jav
 4. MyBatis 是一个 半自动的ORM（Object Relation Mapping）框架
 ```
 
-## MyBatis下载
+## 1.3 MyBatis下载
 [MyBatis下载地址](https://github.com/mybatis/mybatis-3)
 
 ![](/images/posts/2023-12-10-MyBatisLearning/MyBatis下载.png)
 
-## 和其它持久化层技术对比
+## 1.4 和其它持久化层技术对比
 ```
-- JDBC  
-  - SQL 夹杂在Java代码中耦合度高，导致硬编码内伤  
-  - 维护不易且实际开发需求中 SQL 有变化，频繁修改的情况多见  
-  - 代码冗长，开发效率低
-- Hibernate 和 JPA
-  - 操作简便，开发效率高  
-  - 程序中的长难复杂 SQL 需要绕过框架  
-  - 内部自动生产的 SQL，不容易做特殊优化  
-  - 基于全映射的全自动框架，大量字段的 POJO 进行部分映射时比较困难。  
-  - 反射操作太多，导致数据库性能下降
-- MyBatis
-  - 轻量级，性能出色  
-  - SQL 和 Java 编码分开，功能边界清晰。Java代码专注业务、SQL语句专注数据  
-  - 开发效率稍逊于HIbernate，但是完全能够接受
+JDBC  
+  1. SQL 夹杂在Java代码中耦合度高，导致硬编码内伤  
+  2. 维护不易且实际开发需求中 SQL 有变化，频繁修改的情况多见  
+  3. 代码冗长，开发效率低
+Hibernate 和 JPA
+  1. 操作简便，开发效率高  
+  2. 程序中的长难复杂 SQL 需要绕过框架  
+  3. 内部自动生产的 SQL，不容易做特殊优化  
+  4. 基于全映射的全自动框架，大量字段的 POJO 进行部分映射时比较困难。  
+  5. 反射操作太多，导致数据库性能下降
+MyBatis
+  1. 轻量级，性能出色  
+  2. SQL 和 Java 编码分开，功能边界清晰。Java代码专注业务、SQL语句专注数据  
+  3. 开发效率稍逊于HIbernate，但是完全能够接受
 ```
 
-# 搭建MyBatis
-## 开发环境
+# 二、搭建MyBatis
+## 2.1 开发环境
 ```
 IDE：idea 2019.2  
 构建工具：maven 3.5.4  
@@ -52,7 +52,7 @@ MySQL版本：MySQL 5.7
 MyBatis版本：MyBatis 3.5.7
 ```
 
-## 创建maven工程
+## 2.2 创建maven工程
 - 打包方式：jar
 - 引入依赖
 
@@ -79,9 +79,10 @@ MyBatis版本：MyBatis 3.5.7
 		</dependency>
 </dependencies>
 ```
-## 创建MyBatis的核心配置文件
+## 2.3 创建MyBatis的核心配置文件
 ```
-习惯上命名为`mybatis-config.xml`，这个文件名仅仅只是建议，并非强制要求。将来整合Spring之后，这个配置文件可以省略，所以大家操作时可以直接复制、粘贴。
+习惯上命名为mybatis-config.xml，这个文件名仅仅只是建议，并非强制要求。将来整合Spring之后，这个配置文件可以省略，所以大家操作时可以直接复制、粘贴。
+
 核心配置文件主要用于配置连接数据库的环境以及MyBatis的全局配置信息
 核心配置文件存放的位置是src/main/resources目录下
 ```
@@ -110,8 +111,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</mappers>  
 </configuration>
 ```
-## 创建mapper接口
->MyBatis中的mapper接口相当于以前的dao。但是区别在于，mapper仅仅是接口，我们不需要提供实现类
+## 2.4 创建mapper接口
+```
+MyBatis中的mapper接口相当于以前的dao。但是区别在于，mapper仅仅是接口，我们不需要提供实现类
+```
+
 ```java
 package com.atguigu.mybatis.mapper;  
   
@@ -122,13 +126,13 @@ public interface UserMapper {
 	int insertUser();  
 }
 ```
-## 创建MyBatis的映射文件
+## 2.5 创建MyBatis的映射文件
 ```
 相关概念：ORM（Object Relationship Mapping）对象关系映射。  
 
-- 对象：Java的实体类对象  
-- 关系：关系型数据库  
-- 映射：二者之间的对应关系
+对象：Java的实体类对象  
+关系：关系型数据库  
+映射：二者之间的对应关系
 ```
 
 | Java概念 | 数据库概念 |
@@ -138,15 +142,15 @@ public interface UserMapper {
 | 对象 | 记录/行 |
 
 ```
-- 映射文件的命名规则
-  - 表所对应的实体类的类名+Mapper.xml
-  - 例如：表t_user，映射的实体类为User，所对应的映射文件为UserMapper.xml 
-  - 因此一个映射文件对应一个实体类，对应一张表的操作
-  - MyBatis映射文件用于编写SQL，访问以及操作表中的数据
-  - MyBatis映射文件存放的位置是src/main/resources/mappers目录下
-- MyBatis中可以面向接口操作数据，要保证两个一致
-  - mapper接口的全类名和映射文件的命名空间（namespace）保持一致
-  - mapper接口中方法的方法名和映射文件中编写SQL的标签的id属性保持一致
+映射文件的命名规则
+  表所对应的实体类的类名+Mapper.xml
+  例如：表t_user，映射的实体类为User，所对应的映射文件为UserMapper.xml 
+  因此一个映射文件对应一个实体类，对应一张表的操作
+  MyBatis映射文件用于编写SQL，访问以及操作表中的数据
+  MyBatis映射文件存放的位置是src/main/resources/mappers目录下
+MyBatis中可以面向接口操作数据，要保证两个一致
+  mapper接口的全类名和映射文件的命名空间（namespace）保持一致
+  mapper接口中方法的方法名和映射文件中编写SQL的标签的id属性保持一致
 ```
 
 ```xml
@@ -161,10 +165,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>  
 </mapper>
 ```
-## 通过junit测试功能
+## 2.6 通过junit测试功能
 ```
-SqlSession：代表Java程序和数据库之间的会话。（HttpSession是Java程序和浏览器之间的会话）
+SqlSession：代表Java程序和数据库之间的会话。(HttpSession是Java程序和浏览器之间的会话)
 SqlSessionFactory：是“生产”SqlSession的“工厂”
+
 工厂模式：如果创建某一个对象，使用的过程基本固定，那么我们就可以把创建这个对象的相关代码封装到一个“工厂类”中，以后都使用这个工厂类来“生产”我们需要的对象
 ```
 
@@ -198,42 +203,46 @@ public class UserMapperTest {
 
 
 
-## 加入log4j日志功能
-1. 加入依赖
-	```xml
-	<!-- log4j日志 -->
-	<dependency>
-	<groupId>log4j</groupId>
-	<artifactId>log4j</artifactId>
-	<version>1.2.17</version>
-	</dependency>
-	```
-2. 加入log4j的配置文件
-	- log4j的配置文件名为log4j.xml，存放的位置是src/main/resources目录下
-	- 日志的级别：FATAL(致命)>ERROR(错误)>WARN(警告)>INFO(信息)>DEBUG(调试) 从左到右打印的内容越来越详细
-	```xml
-	<?xml version="1.0" encoding="UTF-8" ?>
-	<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-	<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
-	        <param name="Encoding" value="UTF-8" />
-	        <layout class="org.apache.log4j.PatternLayout">
-				<param name="ConversionPattern" value="%-5p %d{MM-dd HH:mm:ss,SSS} %m (%F:%L) \n" />
-	        </layout>
-	    </appender>
-	    <logger name="java.sql">
-	        <level value="debug" />
-	    </logger>
-	    <logger name="org.apache.ibatis">
-	        <level value="info" />
-	    </logger>
-	    <root>
-	        <level value="debug" />
-	        <appender-ref ref="STDOUT" />
-	    </root>
-	</log4j:configuration>
-	```
-# 核心配置文件详解
+## 2.7 加入log4j日志功能
+### 2.7.1 加入依赖
+
+```xml
+<!-- log4j日志 -->
+<dependency>
+<groupId>log4j</groupId>
+<artifactId>log4j</artifactId>
+<version>1.2.17</version>
+</dependency>
+```
+
+### 2.7.2 加入log4j的配置文件
+
+- log4j的配置文件名为log4j.xml，存放的位置是src/main/resources目录下
+- 日志的级别：FATAL(致命)>ERROR(错误)>WARN(警告)>INFO(信息)>DEBUG(调试) 从左到右打印的内容越来越详细
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+        <param name="Encoding" value="UTF-8" />
+        <layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p %d{MM-dd HH:mm:ss,SSS} %m (%F:%L) \n" />
+        </layout>
+    </appender>
+    <logger name="java.sql">
+        <level value="debug" />
+    </logger>
+    <logger name="org.apache.ibatis">
+        <level value="info" />
+    </logger>
+    <root>
+        <level value="debug" />
+        <appender-ref ref="STDOUT" />
+    </root>
+</log4j:configuration>
+```
+
+# 三、核心配置文件详解
 ```
 核心配置文件中的标签必须按照固定的顺序(有的标签可以不写，但顺序一定不能乱)：
 properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapperFactory、reflectorFactory、plugins、environments、databaseIdProvider、mappers
@@ -321,65 +330,76 @@ properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapp
 ```
 ![](/images/posts/2023-12-10-MyBatisLearning/mapper接口和mapper映射文件在同一包下.png)
 
-# 默认的类型别名
+# 四、默认的类型别名
 ![](/images/posts/2023-12-10-MyBatisLearning/默认的类型别名1.png)
 ![](/images/posts/2023-12-10-MyBatisLearning/默认的类型别名2.png)
 
-# MyBatis的增删改查
-1. 添加
-	```xml
-	<!--int insertUser();-->
-	<insert id="insertUser">
-		insert into t_user values(null,'admin','123456',23,'男','12345@qq.com')
-	</insert>
-	```
-2. 删除
-	```xml
-	<!--int deleteUser();-->
-    <delete id="deleteUser">
-        delete from t_user where id = 6
-    </delete>
-	```
-3. 修改
-	```xml
-	<!--int updateUser();-->
-    <update id="updateUser">
-        update t_user set username = '张三' where id = 5
-    </update>
-	```
-4. 查询一个实体类对象
-	```xml
-   <!--User getUserById();-->  
-	<select id="getUserById" resultType="com.atguigu.mybatis.bean.User">  
-		select * from t_user where id = 2  
-	</select>
-	```
-5. 查询集合
-	```xml
-	<!--List<User> getUserList();-->
-	<select id="getUserList" resultType="com.atguigu.mybatis.bean.User">
-		select * from t_user
-	</select>
-	```
+# 五、MyBatis的增删改查
+## 5.1 添加
+
+```xml
+<!--int insertUser();-->
+<insert id="insertUser">
+	insert into t_user values(null,'admin','123456',23,'男','12345@qq.com')
+</insert>
+```
+
+## 5.2 删除
+
+```xml
+<!--int deleteUser();-->
+ <delete id="deleteUser">
+     delete from t_user where id = 6
+ </delete>
+```
+
+## 5.3 修改
+
+```xml
+<!--int updateUser();-->
+ <update id="updateUser">
+     update t_user set username = '张三' where id = 5
+ </update>
+```
+
+## 5.4 查询
+
+### 5.4.1 查询一个实体类对象
+
+```xml
+<!--User getUserById();-->  
+<select id="getUserById" resultType="com.atguigu.mybatis.bean.User">  
+	select * from t_user where id = 2  
+</select>
+```
+
+### 5.4.2 查询集合
+
+```xml
+<!--List<User> getUserList();-->
+<select id="getUserList" resultType="com.atguigu.mybatis.bean.User">
+	select * from t_user
+</select>
+```
 
 ```
 注意：
 1. 查询的标签select必须设置属性resultType或resultMap，用于设置实体类和数据库表的映射关系  
-   - resultType：自动映射，用于属性名和表中字段名一致的情况  
-   - resultMap：自定义映射，用于一对多或多对一或字段名和属性名不一致的情况  
+   resultType：自动映射，用于属性名和表中字段名一致的情况  
+   resultMap：自定义映射，用于一对多或多对一或字段名和属性名不一致的情况  
 2. 当查询的数据为多条时，不能使用实体类作为返回值，只能使用集合，否则会抛出异常TooManyResultsException；但是若查询的数据只有一条，可以使用实体类或集合作为返回值
 ```
 
 
 
-# MyBatis获取参数值的两种方式（重点）
+# 六、MyBatis获取参数值的两种方式（重点）
 ```
 MyBatis获取参数值的两种方式：${}和#{}  
 ${}的本质就是字符串拼接，#{}的本质就是占位符赋值  
 ${}使用字符串拼接的方式拼接sql，若为字符串类型或日期类型的字段进行赋值时，需要手动加单引号；但是#{}使用占位符赋值的方式拼接sql，此时为字符串类型或日期类型的字段进行赋值时，可以自动添加单引号
 ```
 
-## 单个字面量类型的参数
+## 6.1 单个字面量类型的参数
 ```
 若mapper接口中的方法参数为单个的字面量类型，此时可以使用\${}和#{}以任意的名称（最好见名识意）获取参数的值，注意${}需要手动加单引号
 ```
@@ -396,7 +416,7 @@ ${}使用字符串拼接的方式拼接sql，若为字符串类型或日期类�
 	select * from t_user where username = '${username}'  
 </select>
 ```
-## 多个字面量类型的参数
+## 6.2 多个字面量类型的参数
 ```
 若mapper接口中的方法参数为多个时，此时MyBatis会自动将这些参数放在一个map集合中
   1. 以arg0,arg1...为键，以参数为值；
@@ -417,7 +437,7 @@ ${}使用字符串拼接的方式拼接sql，若为字符串类型或日期类�
 	select * from t_user where username = '${param1}' and password = '${param2}'
 </select>
 ```
-## map集合类型的参数
+## 6.3 map集合类型的参数
 ```
 若mapper接口中的方法需要的参数为多个时，此时可以手动创建map集合，将这些数据放在map中只需要通过\${}和#{}访问map集合的键就可以获取相对应的值，注意${}需要手动加单引号
 ```
@@ -440,7 +460,7 @@ public void checkLoginByMap() {
 	System.out.println(user);
 }
 ```
-## 实体类类型的参数
+## 6.4 实体类类型的参数
 ```
 若mapper接口中的方法参数为实体类对象时此时可以使用\${}和#{}，通过访问实体类对象中的属性名获取属性值，注意${}需要手动加单引号
 ```
@@ -460,7 +480,7 @@ public void insertUser() {
 	mapper.insertUser(user);
 }
 ```
-## 使用@Param标识参数
+## 6.5 使用@Param标识参数
 ```
 可以通过@Param注解标识mapper接口中的方法参数，此时，会将这些参数放在map集合中 
   1. 以@Param注解的value属性值为键，以参数为值；
@@ -490,19 +510,19 @@ public void checkLoginByParam() {
 2. 使用@Param标识参数
 ```
 
-# MyBatis的各种查询功能
+# 七、MyBatis的各种查询功能
 ```
-1. 如果查询出的数据只有一条，可以通过
+1. 如果查询出的数据只有一条,可以通过
    1. 实体类对象接收
    2. List集合接收
-   3. Map集合接收，结果`{password=123456, sex=男, id=1, age=23, username=admin}`
+   3. Map集合接收，结果{password=123456, sex=男, id=1, age=23, username=admin}
 2. 如果查询出的数据有多条，一定不能用实体类对象接收，会抛异常TooManyResultsException，可以通过
    1. 实体类类型的LIst集合接收
    2. Map类型的LIst集合接收
    3. 在mapper接口的方法上添加@MapKey注解
 ```
 
-## 查询一个实体类对象
+## 7.1 查询一个实体类对象
 ```java
 /**
  * 根据用户id查询用户信息
@@ -517,7 +537,7 @@ User getUserById(@Param("id") int id);
 	select * from t_user where id = #{id}
 </select>
 ```
-## 查询一个List集合
+## 7.2 查询一个List集合
 ```java
 /**
  * 查询所有用户信息
@@ -531,7 +551,7 @@ List<User> getUserList();
 	select * from t_user
 </select>
 ```
-## 查询单个数据
+## 7.3 查询单个数据
 ```java
 /**  
  * 查询用户的总记录数  
@@ -549,7 +569,7 @@ int getCount();
 	select count(id) from t_user
 </select>
 ```
-## 查询一条数据为map集合
+## 7.4 查询一条数据为map集合
 ```java
 /**  
  * 根据用户id查询用户信息为map集合  
@@ -565,8 +585,8 @@ Map<String, Object> getUserToMap(@Param("id") int id);
 </select>
 <!--结果：{password=123456, sex=男, id=1, age=23, username=admin}-->
 ```
-## 查询多条数据为map集合
-### 方法一
+## 7.5 查询多条数据为map集合
+### 7.5.1 方法一
 ```java
 /**  
  * 查询所有用户信息为map集合  
@@ -587,7 +607,7 @@ List<Map<String, Object>> getAllUserToMap();
 	{password=123456, sex=男, id=3, age=23, username=张三}]
 -->
 ```
-### 方法二
+### 7.5.2 方法二
 ```java
 /**
  * 查询所有用户信息为map集合
@@ -611,8 +631,8 @@ Map<String, Object> getAllUserToMap();
 	}
 -->
 ```
-# 特殊SQL的执行
-## 模糊查询
+# 八、特殊SQL的执行
+## 8.1 模糊查询
 ```java
 /**
  * 根据用户名进行模糊查询
@@ -634,7 +654,7 @@ List<User> getUserByLike(@Param("username") String username);
 其中`select * from t_user where username like "%"#{mohu}"%"`是最常用的
 ```
 
-## 批量删除
+## 8.2 批量删除
 ```
 只能使用\${}，如果使用#{}，则解析后的sql语句为`delete from t_user where id in ('1,2,3')`，这样是将`1,2,3`看做是一个整体，只有id为`1,2,3`的数据会被删除。正确的语句应该是`delete from t_user where id in (1,2,3)`，或者`delete from t_user where id in ('1','2','3')`
 ```
@@ -663,7 +683,7 @@ public void deleteMore() {
 	System.out.println(result);
 }
 ```
-## 动态设置表名
+## 8.3 动态设置表名
 ```
 只能使用${}，因为表名不能加单引号
 ```
@@ -683,7 +703,7 @@ List<User> getUserByTable(@Param("tableName") String tableName);
 	select * from ${tableName}
 </select>
 ```
-## 添加功能获取自增的主键
+## 8.4 添加功能获取自增的主键
 ```
 使用场景
   t_clazz(clazz_id,clazz_name)  
@@ -724,8 +744,8 @@ public void insertUser() {
 	//输出：user{id=10, username='ton', password='123', age=23, sex='男', email='123@321.com'}，自增主键存放到了user的id属性中
 }
 ```
-# 自定义映射resultMap
-## resultMap处理字段和属性的映射关系
+# 九、自定义映射resultMap
+## 9.1 resultMap处理字段和属性的映射关系
 ```
 resultMap：设置自定义映射  
 
@@ -758,11 +778,9 @@ resultMap：设置自定义映射
 </select>
 ```
 ```
-若字段名和实体类中的属性名不一致，但是字段名符合数据库的规则（使用_），实体类中的属性名符合Java的规则（使用驼峰）。此时也可通过以下两种方式处理字段名和实体类中的属性的映射关系  
-```
-
-```
-1. 可以通过为字段起别名的方式，保证和实体类中的属性名保持一致  
+若字段名和实体类中的属性名不一致，但是字段名符合数据库的规则（使用_），实体类中的属性名符合Java的规则（使用驼峰）。此时也可通过以下两种方式处理字段名和实体类中的属性的映射关系：
+	1. 可以通过为字段起别名的方式，保证和实体类中的属性名保持一致 
+	2. 可以在MyBatis的核心配置文件中的`setting`标签中，设置一个全局配置信息mapUnderscoreToCamelCase，可以在查询表中数据时，自动将_类型的字段名转换为驼峰，例如：字段名user_name，设置了mapUnderscoreToCamelCase，此时字段名就会转换为userName。[核心配置文件详解](#核心配置文件详解)
 ```
 
 ```xml
@@ -772,8 +790,6 @@ resultMap：设置自定义映射
 </select>
 ```
 
-	2. 可以在MyBatis的核心配置文件中的`setting`标签中，设置一个全局配置信息mapUnderscoreToCamelCase，可以在查询表中数据时，自动将_类型的字段名转换为驼峰，例如：字段名user_name，设置了mapUnderscoreToCamelCase，此时字段名就会转换为userName。[核心配置文件详解](#核心配置文件详解)
-
 ```xml
 <settings>
     <setting name="mapUnderscoreToCamelCase" value="true"/>
@@ -782,11 +798,7 @@ resultMap：设置自定义映射
 
 
 
-## 多对一映射处理
-
-```
-查询员工信息以及员工所对应的部门信息
-```
+## 9.2 多对一映射处理
 
 ```java
 public class Emp {  
@@ -799,7 +811,7 @@ public class Emp {
 	//...构造器、get、set方法等
 }
 ```
-### 级联方式处理映射关系
+### 9.2.1 级联方式处理映射关系
 ```xml
 <resultMap id="empAndDeptResultMapOne" type="Emp">
 	<id property="eid" column="eid"></id>
@@ -815,7 +827,7 @@ public class Emp {
 	select * from t_emp left join t_dept on t_emp.eid = t_dept.did where t_emp.eid = #{eid}
 </select>
 ```
-### 使用association处理映射关系
+### 9.2.2 使用association处理映射关系
 ```
 association：处理多对一的映射关系
 property：需要处理多对的映射关系的属性名
@@ -839,15 +851,14 @@ javaType：该属性的类型
 	select * from t_emp left join t_dept on t_emp.eid = t_dept.did where t_emp.eid = #{eid}
 </select>
 ```
-### 分步查询
-#### 1. 查询员工信息
+### 9.2.3 分步查询
+#### 9.2.3.1 查询员工信息
 ```
 select：设置分布查询的sql的唯一标识（namespace.SQLId或mapper接口的全类名.方法名）
 column：设置分步查询的条件
 ```
 
 ```java
-//EmpMapper里的方法
 /**
  * 通过分步查询，员工及所对应的部门信息
  * 分步查询第一步：查询员工信息
@@ -873,9 +884,8 @@ Emp getEmpAndDeptByStepOne(@Param("eid") Integer eid);
 	select * from t_emp where eid = #{eid}
 </select>
 ```
-#### 2. 查询部门信息
+#### 9.2.3.2 查询部门信息
 ```java
-//DeptMapper里的方法
 /**
  * 通过分步查询，员工及所对应的部门信息
  * 分步查询第二步：通过did查询员工对应的部门信息
@@ -896,7 +906,7 @@ Dept getEmpAndDeptByStepTwo(@Param("did") Integer did);
 	select * from t_dept where did = #{did}
 </select>
 ```
-## 一对多映射处理
+## 9.3 一对多映射处理
 ```java
 public class Dept {
     private Integer did;
@@ -905,7 +915,7 @@ public class Dept {
 	//...构造器、get、set方法等
 }
 ```
-### collection
+### 9.3.1 collection
 ```
 collection：用来处理一对多的映射关系
 ofType：表示该属性对饮的集合中存储的数据的类型
@@ -928,8 +938,8 @@ ofType：表示该属性对饮的集合中存储的数据的类型
 	select * from t_dept left join t_emp on t_dept.did = t_emp.did where t_dept.did = #{did}
 </select>
 ```
-### 分步查询
-####  1. 查询部门信息
+### 9.3.2 分步查询
+####  9.3.2.1 查询部门信息
 ```java
 /**
  * 通过分步查询，查询部门及对应的所有员工信息
@@ -953,7 +963,7 @@ Dept getDeptAndEmpByStepOne(@Param("did") Integer did);
 	select * from t_dept where did = #{did}
 </select>
 ```
-#### 2. 根据部门id查询部门中的所有员工
+#### 9.3.2.2 根据部门id查询部门中的所有员工
 ```java
 /**
  * 通过分步查询，查询部门及对应的所有员工信息
@@ -970,7 +980,7 @@ List<Emp> getDeptAndEmpByStepTwo(@Param("did") Integer did);
 	select * from t_emp where did = #{did}
 </select>
 ```
-## 延迟加载
+## 9.4 延迟加载
 ```
 分步查询的优点：可以实现延迟加载，但是必须在核心配置文件中设置全局配置信息：
  	lazyLoadingEnabled：延迟加载的全局开关。当开启时，所有关联对象都会延迟加载  
@@ -1030,12 +1040,12 @@ fetchType：当开启了全局的延迟加载之后，可以通过该属性手�
 				 fetchType="lazy"></association>
 </resultMap>
 ```
-# 动态SQL
+# 十、动态SQL
 ```
 Mybatis框架的动态SQL技术是一种根据特定条件动态拼装SQL语句的功能，它存在的意义是为了解决拼接SQL语句字符串时的痛点问题
 ```
 
-## if
+## 10.1 if
 ```
 if标签可通过test属性（即传递过来的数据）的表达式进行判断，若表达式的结果为true，则标签中的内容会执行；反之标签中的内容不会执行
 在where后面添加一个恒成立条件`1=1`
@@ -1044,8 +1054,6 @@ if标签可通过test属性（即传递过来的数据）的表达式进行判�
    	如果不加上恒成立条件，则SQL语句为`select * from t_emp where and age = ? and sex = ? and email = ?`，此时`where`会与`and`连用，SQL语句会报错
     如果加上一个恒成立条件，则SQL语句为`select * from t_emp where 1= 1 and age = ? and sex = ? and email = ?`，此时不报错
 ```
-
-
 
 ```xml
 <!--List<Emp> getEmpByCondition(Emp emp);-->
@@ -1065,7 +1073,7 @@ if标签可通过test属性（即传递过来的数据）的表达式进行判�
 	</if>
 </select>
 ```
-## where
+## 10.2 where
 ```
 where和if一般结合使用：
 若where标签中的if条件都不满足，则where标签没有任何功能，即不会添加where关键字  
@@ -1105,7 +1113,7 @@ emp_name = #{empName} and
 	age = #{age}
 </if>
 ```
-## trim
+## 10.3 trim
 ```
 trim用于去掉或添加标签中的内容  
 常用属性
@@ -1147,7 +1155,7 @@ public void getEmpByCondition() {
 }
 ```
 ![](/images/posts/2023-12-10-MyBatisLearning/trim测试结果.png)
-## choose、when、otherwise
+## 10.4 choose、when、otherwise
 ```
 `choose、when、otherwise`相当于`if...else if..else`
 when至少要有一个，otherwise至多只有一个
@@ -1192,7 +1200,7 @@ public void getEmpByChoose() {
 相当于`if a else if b else if c else d`，只会执行其中一个
 ```
 
-## foreach
+## 10.5 foreach
 ```
 属性：  
 	collection：设置要循环的数组或集合  
@@ -1256,22 +1264,28 @@ public void insertMoreByList() {
 ```
 ![](/images/posts/2023-12-10-MyBatisLearning/foreach测试结果2.png)
 
-## SQL片段
+## 10.6 SQL片段
 
-- sql片段，可以记录一段公共sql片段，在使用的地方通过include标签进行引入
-- 声明sql片段：`<sql>`标签
+```
+sql片段，可以记录一段公共sql片段，在使用的地方通过include标签进行引入
+声明sql片段：<sql>标签
+```
+
 ```xml
 <sql id="empColumns">eid,emp_name,age,sex,email</sql>
 ```
-- 引用sql片段：`<include>`标签
+```
+引用sql片段：<include>标签
+```
+
 ```xml
 <!--List<Emp> getEmpByCondition(Emp emp);-->
 <select id="getEmpByCondition" resultType="Emp">
 	select <include refid="empColumns"></include> from t_emp
 </select>
 ```
-# MyBatis的缓存
-## MyBatis的一级缓存
+# 十一、MyBatis的缓存
+## 11.1 MyBatis的一级缓存
 - 一级缓存是SqlSession级别的，通过同一个SqlSession查询的数据会被缓存，下次查询相同的数据，就会从缓存中直接获取，不会从数据库重新访问  
 - 使一级缓存失效的四种情况：  
 
@@ -1279,7 +1293,7 @@ public void insertMoreByList() {
 	2. 同一个SqlSession但是查询条件不同
 	3. 同一个SqlSession两次查询期间执行了任何一次增删改操作
 	4. 同一个SqlSession两次查询期间手动清空了缓存
-## MyBatis的二级缓存
+## 11.2 MyBatis的二级缓存
 - 二级缓存是SqlSessionFactory级别，通过同一个SqlSessionFactory创建的SqlSession查询的结果会被缓存；此后若再次执行相同的查询语句，结果就会从缓存中获取  
 - 二级缓存开启的条件
 
@@ -1288,7 +1302,7 @@ public void insertMoreByList() {
 	3. 二级缓存必须在SqlSession关闭或提交之后有效
 	4. 查询的数据所转换的实体类类型必须实现序列化的接口
 - 使二级缓存失效的情况：两次查询之间执行了任意的增删改，会使一级和二级缓存同时失效
-## 二级缓存的相关配置
+## 11.3 二级缓存的相关配置
 - 在mapper配置文件中添加的cache标签可以设置一些属性
 - eviction属性：缓存回收策略  
 	- LRU（Least Recently Used） – 最近最少使用的：移除最长时间不被使用的对象。  
@@ -1303,13 +1317,13 @@ public void insertMoreByList() {
 - readOnly属性：只读，true/false
 	- true：只读缓存；会给所有调用者返回缓存对象的相同实例。因此这些对象不能被修改。这提供了很重要的性能优势。  
 	- false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这会慢一些，但是安全，因此默认是false
-## MyBatis缓存查询的顺序
+## 11.4 MyBatis缓存查询的顺序
 - 先查询二级缓存，因为二级缓存中可能会有其他程序已经查出来的数据，可以拿来直接使用  
 - 如果二级缓存没有命中，再查询一级缓存  
 - 如果一级缓存也没有命中，则查询数据库  
 - SqlSession关闭之后，一级缓存中的数据会写入二级缓存
-## 整合第三方缓存EHCache（了解）
-### 添加依赖
+## 11.5 整合第三方缓存EHCache（了解）
+### 11.5.1 添加依赖
 ```xml
 <!-- Mybatis EHCache整合包 -->
 <dependency>
@@ -1324,7 +1338,7 @@ public void insertMoreByList() {
 	<version>1.2.3</version>
 </dependency>
 ```
-### 各个jar包的功能
+### 11.5.2 各个jar包的功能
 | jar包名称 | 作用 |
 | --- | --- |
 | mybatis-ehcache | Mybatis和EHCache的整合包 |
@@ -1332,7 +1346,7 @@ public void insertMoreByList() {
 | slf4j-api | SLF4J日志门面包 |
 | logback-classic | 支持SLF4J门面接口的一个具体实现 |
 
-### 创建EHCache的配置文件ehcache.xml
+### 11.5.3 创建EHCache的配置文件ehcache.xml
 - 名字必须叫`ehcache.xml`
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -1352,12 +1366,12 @@ public void insertMoreByList() {
     </defaultCache>
 </ehcache>
 ```
-### 设置二级缓存的类型
+### 11.5.4 设置二级缓存的类型
 - 在xxxMapper.xml文件中设置二级缓存类型
 ```xml
 <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 ```
-### 加入logback日志
+### 11.5.5 加入logback日志
 - 存在SLF4J时，作为简易日志的log4j将失效，此时我们需要借助SLF4J的具体实现logback来打印日志。创建logback的配置文件`logback.xml`，名字固定，不可改变
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1381,7 +1395,7 @@ public void insertMoreByList() {
     <logger name="com.atguigu.crowd.mapper" level="DEBUG"/>
 </configuration>
 ```
-### EHCache配置文件说明
+### 11.5.6 EHCache配置文件说明
 | 属性名 | 是否必须 | 作用 |
 | --- | --- | --- |
 | maxElementsInMemory | 是 | 在内存中缓存的element的最大数目 |
@@ -1394,14 +1408,14 @@ public void insertMoreByList() {
 | diskPersistent | 否 | 在VM重启的时候是否启用磁盘保存EhCache中的数据，默认是false |
 | diskExpiryThreadIntervalSeconds | 否 | 磁盘缓存的清理线程运行间隔，默认是120秒。每个120s， 相应的线程会进行一次EhCache中数据的清理工作 |
 | memoryStoreEvictionPolicy | 否 | 当内存缓存达到最大，有新的element加入的时候， 移除缓存中element的策略。 默认是LRU（最近最少使用），可选的有LFU（最不常使用）和FIFO（先进先出 |
-# MyBatis的逆向工程
+# 十二、MyBatis的逆向工程
 - 正向工程：先创建Java实体类，由框架负责根据实体类生成数据库表。Hibernate是支持正向工程的
 - 逆向工程：先创建数据库表，由框架负责根据数据库表，反向生成如下资源：  
 	- Java实体类  
 	- Mapper接口  
 	- Mapper映射文件
-## 创建逆向工程的步骤
-### 添加依赖和插件
+## 12.1 创建逆向工程的步骤
+### 12.1.1 添加依赖和插件
 ```xml
 <dependencies>
 	<!-- MyBatis核心依赖包 -->
@@ -1464,7 +1478,7 @@ public void insertMoreByList() {
 	</plugins>
 </build>
 ```
-### 创建MyBatis的核心配置文件
+### 12.1.2 创建MyBatis的核心配置文件
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
@@ -1491,7 +1505,7 @@ public void insertMoreByList() {
     </mappers>
 </configuration>
 ```
-### 创建逆向工程的配置文件
+### 12.1.3 创建逆向工程的配置文件
 - 文件名必须是：`generatorConfig.xml`
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1534,15 +1548,15 @@ public void insertMoreByList() {
     </context>
 </generatorConfiguration>
 ```
-### 执行MBG插件的generate目标
+### 12.1.4 执行MBG插件的generate目标
 - ![](/images/posts/2023-12-10-MyBatisLearning/执行MBG插件的generate目标.png)
 - 如果出现报错：`Exception getting JDBC Driver`，可能是pom.xml中，数据库驱动配置错误
 	- dependency中的驱动![](/images/posts/2023-12-10-MyBatisLearning/dependency中的驱动.png)
 	- mybatis-generator-maven-plugin插件中的驱动![](/images/posts/2023-12-10-MyBatisLearning/插件中的驱动.png)
 	- 两者的驱动版本应该相同
 - 执行结果![](/images/posts/2023-12-10-MyBatisLearning/逆向执行结果.png)
-## QBC
-### 查询
+## 12.2 QBC
+### 12.2.1 查询
 - `selectByExample`：按条件查询，需要传入一个example对象或者null；如果传入一个null，则表示没有条件，也就是查询所有数据
 - `example.createCriteria().xxx`：创建条件对象，通过andXXX方法为SQL添加查询添加，每个条件之间是and关系
 - `example.or().xxx`：将之前添加的条件通过or拼接其他条件
@@ -1564,16 +1578,16 @@ public void insertMoreByList() {
 }
 ```
 ![](/images/posts/2023-12-10-MyBatisLearning/example测试结果.png)
-### 增改
+### 12.2.2 增改
 - `updateByPrimaryKey`：通过主键进行数据修改，如果某一个值为null，也会将对应的字段改为null
 	- `mapper.updateByPrimaryKey(new Emp(1,"admin",22,null,"456@qq.com",3));`
 	- ![](/images/posts/2023-12-10-MyBatisLearning/增删改测试结果1.png)
 - `updateByPrimaryKeySelective()`：通过主键进行选择性数据修改，如果某个值为null，则不修改这个字段
 	- `mapper.updateByPrimaryKeySelective(new Emp(2,"admin2",22,null,"456@qq.com",3));`
 	- ![](/images/posts/2023-12-10-MyBatisLearning/增删改测试结果2.png)
-# 分页插件
-## 分页插件使用步骤
-### 添加依赖
+# 十三、分页插件
+## 13.1 分页插件使用步骤
+### 13.1.1 添加依赖
 ```xml
 <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper -->
 <dependency>
@@ -1582,7 +1596,7 @@ public void insertMoreByList() {
 	<version>5.2.0</version>
 </dependency>
 ```
-### 配置分页插件
+### 13.1.2 配置分页插件
 - 在MyBatis的核心配置文件（mybatis-config.xml）中配置插件
 - ![](/images/posts/2023-12-10-MyBatisLearning/配置分页插件.png)
 ```xml
@@ -1591,8 +1605,8 @@ public void insertMoreByList() {
 	<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
 </plugins>
 ```
-## 分页插件的使用
-### 开启分页功能
+## 13.2 分页插件的使用
+### 13.2.1 开启分页功能
 - 在查询功能之前使用`PageHelper.startPage(int pageNum, int pageSize)`开启分页功能
 	- pageNum：当前页的页码  
 	- pageSize：每页显示的条数
@@ -1612,7 +1626,7 @@ public void testPageHelper() throws IOException {
 ```
 
 ![](/images/posts/2023-12-10-MyBatisLearning/分页测试结果.png)
-### 分页相关数据
+### 13.2.2 分页相关数据
 #### 方法一：直接输出
 ```java
 @Test
@@ -1634,7 +1648,7 @@ public void testPageHelper() throws IOException {
 	```
 	Page{count=true, pageNum=1, pageSize=4, startRow=0, endRow=4, total=8, pages=2, reasonable=false, pageSizeZero=false}[Emp{eid=1, empName='admin', age=22, sex='男', email='456@qq.com', did=3}, Emp{eid=2, empName='admin2', age=22, sex='男', email='456@qq.com', did=3}, Emp{eid=3, empName='王五', age=12, sex='女', email='123@qq.com', did=3}, Emp{eid=4, empName='赵六', age=32, sex='男', email='123@qq.com', did=1}]
 	```
-#### 方法二使用PageInfo
+#### 方法二：使用PageInfo
 - 在查询获取list集合之后，使用`PageInfo<T> pageInfo = new PageInfo<>(List<T> list, intnavigatePages)`获取分页相关数据
 	- list：分页之后的数据  
 	- navigatePages：导航分页的页码数
