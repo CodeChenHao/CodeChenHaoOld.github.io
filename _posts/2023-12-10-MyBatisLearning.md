@@ -1354,6 +1354,9 @@ SqlSession关闭之后，一级缓存中的数据会写入二级缓存
 </dependency>
 ```
 ### 11.5.2 各个jar包的功能
+
+
+
 | jar包名称 | 作用 |
 | --- | --- |
 | mybatis-ehcache | Mybatis和EHCache的整合包 |
@@ -1361,7 +1364,10 @@ SqlSession关闭之后，一级缓存中的数据会写入二级缓存
 | slf4j-api | SLF4J日志门面包 |
 | logback-classic | 支持SLF4J门面接口的一个具体实现 |
 
+
+
 ### 11.5.3 创建EHCache的配置文件ehcache.xml
+
 ```
 名字必须叫ehcache.xml
 ```
@@ -1420,6 +1426,9 @@ SqlSession关闭之后，一级缓存中的数据会写入二级缓存
 </configuration>
 ```
 ### 11.5.6 EHCache配置文件说明
+
+
+
 | 属性名 | 是否必须 | 作用 |
 | --- | --- | --- |
 | maxElementsInMemory | 是 | 在内存中缓存的element的最大数目 |
@@ -1432,7 +1441,10 @@ SqlSession关闭之后，一级缓存中的数据会写入二级缓存
 | diskPersistent | 否 | 在VM重启的时候是否启用磁盘保存EhCache中的数据，默认是false |
 | diskExpiryThreadIntervalSeconds | 否 | 磁盘缓存的清理线程运行间隔，默认是120秒。每个120s， 相应的线程会进行一次EhCache中数据的清理工作 |
 | memoryStoreEvictionPolicy | 否 | 当内存缓存达到最大，有新的element加入的时候， 移除缓存中element的策略。 默认是LRU（最近最少使用），可选的有LFU（最不常使用）和FIFO（先进先出 |
+
+
 # 十二、MyBatis的逆向工程
+
 ```
 正向工程：先创建Java实体类，由框架负责根据实体类生成数据库表。Hibernate是支持正向工程的
 逆向工程：先创建数据库表，由框架负责根据数据库表，反向生成如下资源：  
