@@ -22,7 +22,8 @@ tags: 前端
 ```
 
 ### 1.3 浏览器是什么
-```浏览器是网页展示、运行的平台
+```
+浏览器是网页展示、运行的平台
 ```
 
 ### 1.4  常见的浏览器
@@ -35,9 +36,8 @@ Opera => Blink
 
 注：浏览器的内核用于渲染网页，如果内核不一样，则同一个网页通过不同内核渲染时，渲染速度、效果可能不一样。
 ```
-
+### 1.5 Web规范
 ```
-5.Web规范：
 HTML => 负责网页结构/网页内容
 CSS => 负责网页外观/网页样式
 JS => 负责页面交互
@@ -75,31 +75,34 @@ VSCode (推荐、体积小、免费、插件多)、WebStorm、Sublime、Dreamwea
 
 ## 三、HTML语法
 
+### 3.1 注释
+
 ```html
-1.注释
 <!--注释的内容-->
 ```
 
+### 3.2 HTML标签的结构
 ```
-2.HTML标签的结构
 双标签：
 	<开始标签>内容</结束标签>
 单标签：
 	<标签/>
 ```
 
+### 3.3 标签之间的关系
 ```
-3.标签之间的关系：
 父子关系：嵌套
 兄弟关系：并列
 ```
 
-> 排版标签
->
+### 3.4 HTML标签
+
+#### 3.4.1 排版标签
+
+**标题标签**
 
 
 ```html
-4. 标题标签
 <h1>一级标题</h1>
 <h2>二级标题</h2>
 <h3>三级标题</h3>
@@ -111,77 +114,88 @@ VSCode (推荐、体积小、免费、插件多)、WebStorm、Sublime、Dreamwea
 	文字都加粗、文字逐渐减小、独占一行
 ```
 
+**段落标签**
 ```html
-5.段落标签
 <p>我是一段文字</p>
 
 特点:
 	段落之间存在间隙、独占一行
 ```
 
+**换行**
+
 ```html
-6.换行
 <br/>
 ```
 
+**水平分割线**
+
 ```html
-7.水平分割线
 <hr/>
 ```
 
-> 文本格式化标签
+#### 3.4.2 文本格式化标签
+
+**加粗**
 
 ```html
-8.加粗
 <b>文本</b>
 <strong>文本</strong>
 ```
 
+**下划线**
+
 ```html
-9.下划线
 <u>文本</u>
 <ins>文本</ins>
 ```
 
+**倾斜**
+
 ```html
-10.倾斜
 <i>文本</i>
 <em>文本</em>
 ```
 
+**删除线**
+
 ```html
-11.删除线
 <s>文本</s>
 <del>文本</del>
 ```
 
-> 媒体标签
+#### 3.4.3 媒体标签
+
+**图片**
+
 
 ```html
-12.图片
 <img src="图片路径" alt="替换文本" title="提示文本" width="100" height="100">
 ```
 
+**音频**
+
 ```html
-13.音频
 <audio src="音频路径" controls autoplay loop>
 ```
 
+**视频**
+
 ```html
-14.视频
 <video src="视频路径" controls autoplay loop muted>
 ```
 
-> 链接标签
+#### 3.4.4 链接标签
 
 ```html
 <a href="跳转路径" target="_blank">文本</a>
 ```
 
-> 列表标签
+#### 3.4.5 列表标签
+
+**无序列表**
 
 ```html
-15.无序列表
 <ul>
 	<li>苹果</li>
 	<li>香蕉</li>
@@ -189,8 +203,9 @@ VSCode (推荐、体积小、免费、插件多)、WebStorm、Sublime、Dreamwea
 </ul>
 ```
 
+**有序列表**
+
 ```html
-16.有序列表
 <ol>
 	<li>张三</li>
 	<li>李四</li>
@@ -198,8 +213,9 @@ VSCode (推荐、体积小、免费、插件多)、WebStorm、Sublime、Dreamwea
 </ol>
 ```
 
+**自定义列表**
+
 ```html
-17.自定义列表
 <dl>
 	<dt>自定义的主题</dt>
 	<dd>自定义项</dd>
@@ -207,10 +223,11 @@ VSCode (推荐、体积小、免费、插件多)、WebStorm、Sublime、Dreamwea
 </dl>
 ```
 
-> 表格标签
+#### 3.4.6 表格标签
+
+**表格**
 
 ```html
-18.表格
 <table border="1" width="20" height="20">
 	<caption>表格标题<caption>
 	<thead>
@@ -250,77 +267,91 @@ VSCode (推荐、体积小、免费、插件多)、WebStorm、Sublime、Dreamwea
 跨列合并:colspan
 ```
 
-> 表单标签
+#### 3.4.7 表单标签
+
+**表单**
 
 ```html
-19.表单
 <form action="提交的路径">
 </form>
 ```
 
-> Input系列标签
+#### 3.4.8 Input系列标签
+
+**文本框**
 
 ```html
-20.文本框
 <input type="text" name="后台的key" palceholder="提示文本">
 ```
 
+**密码框**
+
 ```html
-21.密码框
 <input type="password" name="后台的key" palceholder="提示文本" >
 ```
 
+**单选框**
+
+
 ```html
-22.单选框
 <input type="radio" name="后台的key" checked>
 ```
 
+**复选框**
+
 ```html
-23.复选框
 <input type="checkbox" name="后台的key" checked>
 ```
 
+**文件**
+
 ```html
-24.文件
 <input type="file" name="后台的key" multiple >
 ```
 
+**提交按钮**
+
 ```html
-25.提交按钮
 <input type="submit" value="我是一个提交按钮">
 ```
 
+**重置按钮**
+
 ```html
-26.重置按钮
 <input type="reset" value="我是一个重置按钮">
 ```
 
+**普通按钮**
+
 ```html
-27.普通按钮
 <input type="button" value="我是一个按钮">
 ```
 
-> Button系列标签
+#### 3.4.9 Button系列标签
+
+**提交按钮**
 
 ```html
-28.提交按钮
 <button type="submit">我是提交按钮</button>
 ```
 
+**重置按钮**
+
 ```html
-29.重置按钮
 <button type="rest">我是重置按钮</button>
 ```
 
+**普通按钮**
+
 ```html
-30.普通按钮
 <button type="button">我是普通按钮</button>
 ```
 
-> Select系列标签
+#### 3.4.10 Select系列标签
+
+**下拉标签**
 
 ```html
-31.下拉标签
 <select name="后台的key">
 	<option value="" selected></option>
 	<option value="北京">北京</option>
@@ -329,34 +360,34 @@ VSCode (推荐、体积小、免费、插件多)、WebStorm、Sublime、Dreamwea
 </select>
 ```
 
-> TextArea标签
+#### 3.4.11 TextArea标签
+
+**文本域**
 
 ```html
-32.文本域
 <textarea cols="20" rows="20" palceholder="提示文本"></textarea>
 ```
 
-> Lable标签
+#### 3.4.12 Lable标签
 
 ```html
-33.lable标签
 <lable for="id">标签</lable><input id="app" type="text">
 
 <lable>标签<input type="text"></lable>
 ```
 
-> 语义化标签
+#### 3.4.13 语义化标签
+
+**无语言的标签**
 
 ```html
-34.无语言的标签
 <div></div>
 	独占一行
 <span></span>
 	在一行显示
 ```
-
+**有语义的标签(手机端)**
 ```
-35.有语义的标签(手机端)
 header =>头部
 nav =>导航
 footer =>底部
@@ -367,11 +398,9 @@ article =>文章
 
 ![](/images/posts/2023-11-12-HtmlSLearning/image-20230522234259019.png)
 
-
-> 字符实体
+### 3.5 字符实体
 
 ```
-36.常见的字符实体
 空格: &nbsp;
 <: &lt;
 >: &gt;
