@@ -7,8 +7,8 @@ tags: 前端
 
 ## 一、HTML初识
 
+### 1.1 网页由什么组成
 ```
-1.网页由什么组成?
 文字
 图片
 视频
@@ -16,18 +16,17 @@ tags: 前端
 超链接
 ```
 
+### 1.2 网页的本质
 ```
-2.网页的本质?
 一个网页就是一个HTML文件，通过浏览器可以将HTML文件中的代码转化成网页
 ```
 
-```
-3.浏览器是网页展示、运行的平台
+### 1.3 浏览器是什么
+```浏览器是网页展示、运行的平台
 ```
 
-
+### 1.4  常见的浏览器
 ```
-4.常见的浏览器：
 IE => Trident
 火狐 => Gecko
 Safari => Webkit
@@ -46,17 +45,19 @@ JS => 负责页面交互
 
 ## 二、HTML初体验
 
+### 2.1 HTML简介
+
 ```
-1.HTML: Hyper Text Markup Language,中文翻译为超文本标记语言
+Hyper Text Markup Language,中文翻译为超文本标记语言
 ```
 
+### 2.2 文字变粗案例
 ```html
-2.文字变粗案例：
 <strong>需要加粗的文字</strong>
 ```
 
+### 2.3 HTML骨架：
 ```html
-3.HTML骨架：
 <html>
 	<head>
 		<title>网页的标题</title>
@@ -67,8 +68,8 @@ JS => 负责页面交互
 </html>
 ```
 
+### 2.4 开发工具
 ```
-4.开发工具
 VSCode (推荐、体积小、免费、插件多)、WebStorm、Sublime、Dreamweaver、Hbuider
 ```
 
