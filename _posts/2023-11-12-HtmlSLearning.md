@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Html学习
+title: Html
 description: Html相关的概念、初体验以及语法
-tags: 前端
+tags: 前端相关技术
 ---
 
 ## 一、HTML初识

@@ -1,8 +1,8 @@
 ---
 layout: post
-title: MyBatis学习
+title: MyBatis
 description: MyBatis的简介、搭建MyBatis环境、配置文件详解、使用MyBatis增删改查、动态SQL、缓存、逆向工程、分页插件相关知识
-tags: MyBatis
+tags: 数据库相关技术
 ---
 
 # 一、Mybatis简介
