@@ -339,16 +339,16 @@ https://github.com/infinilabs/analysis-ik/releases/download/v6.5.4/elasticsearch
 
 解压
 
-![image-20240916193128462](../images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193128462.png)
+![image-20240916193128462](/images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193128462.png)
 
 将解压后的文件夹复制到elasticsearch容器
 
-![image-20240916193216429](../images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193216429.png)
+![image-20240916193216429](/images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193216429.png)
 
 重启elasticsearch容器
 
-![image-20240916193229497](../images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193229497.png)
+![image-20240916193229497](/images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193229497.png)
 
 ##### 5.1.4 测试
 
-![image-20240916193408575](../images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193408575.png)
+![image-20240916193408575](/images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193408575.png)
