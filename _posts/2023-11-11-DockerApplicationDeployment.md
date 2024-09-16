@@ -5,22 +5,23 @@ description: 通过Docker安装应用程序，包括Mysql、Tomacat、Nginx、Re
 tags: Docker
 ---
 
-
 ### 一、部署MySQL
 
-#### 1.1 搜索mysql镜像
+#### 1.1 通过Docker直接安装
+
+##### 1.1.1 搜索mysql镜像
 
 ```shell
 docker search mysql
 ```
 
-#### 1.2 拉取mysql镜像
+##### 1.1.2 拉取mysql镜像
 
 ```shell
 docker pull mysql:5.6
 ```
 
-#### 1.3 创建容器，设置端口映射、目录映射
+##### 1.1.3 创建容器，设置端口映射、目录映射
 
 ```shell
 # 在/root目录下创建mysql目录用于存储mysql数据信息
@@ -30,12 +31,12 @@ cd ~/mysql
 
 ```shell
 docker run -id \
--p 3307:3306 \
+-p 3306:3306 \
 --name=c_mysql \
 -v $PWD/conf:/etc/mysql/conf.d \
 -v $PWD/logs:/logs \
 -v $PWD/data:/var/lib/mysql \
--e MYSQL_ROOT_PASSWORD=123456 \
+-e MYSQL_ROOT_PASSWORD=root \
 mysql:5.6
 ```
 
@@ -48,32 +49,62 @@ mysql:5.6
 
 
 
-#### 1.4 进入容器，操作mysql
+##### 1.1.4 进入容器，操作mysql
 
 ```shell
 docker exec –it c_mysql /bin/bash
 ```
 
-#### 1.5 使用外部机器连接容器中的mysql
+##### 1.1.5 使用外部机器连接容器中的mysql
 
+
+
+#### 1.2 通过Docker-Compose安装
+
+##### 1.2.1 编写docker-compose.yml
+
+```
+version: '3.1'
+services:
+  redis:
+    restart: always
+    image: mysql:5.6
+    container_name: c_mysql
+    ports:
+      - 3306:6606
+    volumes:
+      - /opt/docker-mysql/conf.d:/etc/mysql/conf.d
+      - /opt/docker-mysql/logs:/logs
+      - /opt/docker-mysql/data:/var/lib/musql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+```
+
+##### 1.2.2 通过docker-compose运行
+
+```
+docker-compose up -d
+```
 
 
 
 ### 二、部署Tomcat
 
-#### 2.1 搜索tomcat镜像
+#### 2.1 通过Docker直接安装
+
+##### 2.1.1 搜索tomcat镜像
 
 ```shell
 docker search tomcat
 ```
 
-#### 2.2 拉取tomcat镜像
+##### 2.1.2 拉取tomcat镜像
 
 ```shell
 docker pull tomcat
 ```
 
-#### 2.3 创建容器，设置端口映射、目录映射
+##### 2.1.3 创建容器，设置端口映射、目录映射
 
 ```shell
 # 在/root目录下创建tomcat目录用于存储tomcat数据信息
@@ -95,26 +126,54 @@ tomcat
 
 
 
-#### 2.4 使用外部机器访问tomcat
+##### 2.1.4 使用外部机器访问tomcat
+
+
+
+
+#### 2.2 通过Docker-Compose安装
+
+##### 2.2.1 编写docker-compose.yml
+
+```
+version: '3.1'
+services:
+  redis:
+    restart: always
+    image: tomcat
+    container_name: c_tomcat
+    ports:
+      - 8080:8080
+    volumes:
+      - /opt/docker-tomcat/webapps:/usr/local/tomcat/webapps
+```
+
+##### 2.2.2 通过docker-compose运行
+
+```
+docker-compose up -d
+```
 
 
 
 
 ### 三、部署Nginx
 
-#### 3.1 搜索nginx镜像
+#### 3.1 通过Docker直接安装
+
+##### 3.1.1 搜索nginx镜像
 
 ```shell
 docker search nginx
 ```
 
-#### 3.2 拉取nginx镜像
+##### 3.1.2 拉取nginx镜像
 
 ```shell
 docker pull nginx
 ```
 
-#### 3.3 创建容器，设置端口映射、目录映射
+##### 3.1.3 创建容器，设置端口映射、目录映射
 
 
 ```shell
@@ -180,39 +239,79 @@ nginx
   - **-v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf**：将主机当前目录下的 /conf/nginx.conf 挂载到容器的 :/etc/nginx/nginx.conf。配置目录
   - **-v $PWD/logs:/var/log/nginx**：将主机当前目录下的 logs 目录挂载到容器的/var/log/nginx。日志目录
 
-#### 3.4 使用外部机器访问nginx
+##### 3.1.4 使用外部机器访问nginx
 
+#### 3.2 通过Docker-Compose安装
 
+##### 3.2.1 编写docker-compose.yml
+
+```yaml
+version: '3.1'
+services:
+  nginx:
+    restart: always
+    image: c_nginx
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+      - /opt/docker-nginx/conf.d:/etc/nginx/conf.d
+      - /opt/docker-nginx/logs:/var/log/nginx
+      - /opt/docker-nginx/html:/usr/share/nginx/html
+```
+
+##### 3.2.2 通过docker-compose运行
+
+```sh
+docker-compose up -d
+```
 
 ### 四、部署Redis
 
-#### 4.1 搜索redis镜像
+#### 4.1 通过通过Docker直接安装
+
+##### 4.1.1 搜索redis镜像
 
 ```shell
 docker search redis
 ```
 
-#### 4.2 拉取redis镜像
+##### 4.1.2 拉取redis镜像
 
 ```shell
 docker pull redis:5.0
 ```
 
-#### 4.3 创建容器，设置端口映射
+##### 4.1.3 创建容器，设置端口映射
 
 ```shell
 docker run -id --name=c_redis -p 6379:6379 redis:5.0
 ```
 
-#### 4.4 使用外部机器连接redis
+##### 4.1.4 使用外部机器连接redis
 
 ```shell
 ./redis-cli.exe -h 192.168.149.135 -p 6379
 ```
 
+#### 4.2 通过Docker-Compose安装
 
+##### 4.2.1 编写docker-compose.yml
 
+```yaml
+version: '3.1'
+services:
+  redis:
+    restart: always
+    image: redis:5.0
+    container_name: c_redis
+    ports:
+      - 6379:6379
+```
 
+##### 4.2.2 通过docker-compose运行
 
-
+```sh
+docker-compose up -d
+```
 
