@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Docker应用部署
-description: 通过Docker安装应用程序，包括Mysql、Tomacat、Nginx、Redis
+description: 通过Docker安装应用程序，包括Mysql、Tomacat、Nginx、Redis、Elasticsearch、Kibana
 tags: Docker
 ---
 
@@ -9,61 +9,50 @@ tags: Docker
 
 #### 1.1 通过Docker直接安装
 
-##### 1.1.1 搜索mysql镜像
+##### 1.1.1 搜索镜像
 
-```shell
+```sh
 docker search mysql
 ```
 
-##### 1.1.2 拉取mysql镜像
+##### 1.1.2 拉取镜像
 
-```shell
+```sh
 docker pull mysql:5.6
 ```
 
-##### 1.1.3 创建容器，设置端口映射、目录映射
+##### 1.1.3 部署应用
 
-```shell
+```sh
 # 在/root目录下创建mysql目录用于存储mysql数据信息
 mkdir ~/mysql
 cd ~/mysql
 ```
 
-```shell
-docker run -id \
+```sh
+docker run \
+-d \
 -p 3306:3306 \
 --name=c_mysql \
--v $PWD/conf:/etc/mysql/conf.d \
--v $PWD/logs:/logs \
--v $PWD/data:/var/lib/mysql \
+-v /opt/docker-mysql/conf.d:/etc/mysql/conf.d \
+-v /opt/docker-mysql/logs:/logs \
+-v /opt/docker-mysql/data:/var/lib/mysql \
 -e MYSQL_ROOT_PASSWORD=root \
 mysql:5.6
 ```
 
 - 参数说明：
-  - **-p 3307:3306**：将容器的 3306 端口映射到宿主机的 3307 端口。
-  - **-v $PWD/conf:/etc/mysql/conf.d**：将主机当前目录下的 conf/my.cnf 挂载到容器的 /etc/mysql/my.cnf。配置目录
-  - **-v $PWD/logs:/logs**：将主机当前目录下的 logs 目录挂载到容器的 /logs。日志目录
-  - **-v $PWD/data:/var/lib/mysql** ：将主机当前目录下的data目录挂载到容器的 /var/lib/mysql 。数据目录
+  - **-p 3306:3306**：将容器的 3306 端口映射到宿主机的 3306 端口。
+  - **-v /opt/docker-mysql/conf.d:/etc/mysql/conf.d**：将宿主机的/opt/docker-mysql/conf.d 目录挂载到容器的 /etc/mysql/conf.d。配置目录
+  - **-v /opt/docker-mysql/logs:/logs**：将宿主机的/opt/docker-mysql/logs目录挂载到容器的 /logs。日志目录
+  - **-v /opt/docker-mysql/data:/var/lib/mysql** ：将宿主机的/opt/docker-mysql/data目录挂载到容器的 /var/lib/mysql 。数据目录
   - **-e MYSQL_ROOT_PASSWORD=123456：**初始化 root 用户的密码。
-
-
-
-##### 1.1.4 进入容器，操作mysql
-
-```shell
-docker exec –it c_mysql /bin/bash
-```
-
-##### 1.1.5 使用外部机器连接容器中的mysql
-
-
 
 #### 1.2 通过Docker-Compose安装
 
 ##### 1.2.1 编写docker-compose.yml
 
-```
+```yaml
 version: '3.1'
 services:
   redis:
@@ -71,18 +60,18 @@ services:
     image: mysql:5.6
     container_name: c_mysql
     ports:
-      - 3306:6606
+      - 3306:3306
     volumes:
       - /opt/docker-mysql/conf.d:/etc/mysql/conf.d
       - /opt/docker-mysql/logs:/logs
-      - /opt/docker-mysql/data:/var/lib/musql
+      - /opt/docker-mysql/data:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      MYSQL_ROOT_PASSWORD: root
 ```
 
 ##### 1.2.2 通过docker-compose运行
 
-```
+```sh
 docker-compose up -d
 ```
 
@@ -92,50 +81,40 @@ docker-compose up -d
 
 #### 2.1 通过Docker直接安装
 
-##### 2.1.1 搜索tomcat镜像
+##### 2.1.1 搜索镜像
 
-```shell
+```sh
 docker search tomcat
 ```
 
-##### 2.1.2 拉取tomcat镜像
+##### 2.1.2 拉取镜像
 
-```shell
+```sh
 docker pull tomcat
 ```
 
-##### 2.1.3 创建容器，设置端口映射、目录映射
+##### 2.1.3 部署应用
 
-```shell
-# 在/root目录下创建tomcat目录用于存储tomcat数据信息
-mkdir ~/tomcat
-cd ~/tomcat
-```
-
-```shell
-docker run -id --name=c_tomcat \
+```sh
+docker run \
+-d \
+--name=c_tomcat \
 -p 8080:8080 \
--v $PWD:/usr/local/tomcat/webapps \
+-v /opt/docker-tomcat/webapps:/usr/local/tomcat/webapps \
 tomcat 
 ```
 
 - 参数说明：
   - **-p 8080:8080：**将容器的8080端口映射到主机的8080端口
   
-    **-v $PWD:/usr/local/tomcat/webapps：**将主机中当前目录挂载到容器的webapps
-
-
-
-##### 2.1.4 使用外部机器访问tomcat
-
-
+    **-v /opt/docker-tomcat/webapps:/usr/local/tomcat/webapps：**将宿主机的/opt/docker-tomcat/webapps目录挂载到容器的/usr/local/tomcat/webapps
 
 
 #### 2.2 通过Docker-Compose安装
 
 ##### 2.2.1 编写docker-compose.yml
 
-```
+```yaml
 version: '3.1'
 services:
   redis:
@@ -150,7 +129,7 @@ services:
 
 ##### 2.2.2 通过docker-compose运行
 
-```
+```sh
 docker-compose up -d
 ```
 
@@ -161,32 +140,39 @@ docker-compose up -d
 
 #### 3.1 通过Docker直接安装
 
-##### 3.1.1 搜索nginx镜像
+##### 3.1.1 搜索镜像
 
-```shell
+```sh
 docker search nginx
 ```
 
-##### 3.1.2 拉取nginx镜像
+##### 3.1.2 拉取镜像
 
-```shell
+```sh
 docker pull nginx
 ```
 
-##### 3.1.3 创建容器，设置端口映射、目录映射
+##### 3.1.3 部署
+
+```sh
+docker run \
+-d \
+--name=c_nginx \
+-p 80:80 \
+-v /opt/docker-nginx/conf.d:/etc/nginx/conf.d \
+-v /opt/docker-nginx/logs:/var/log/nginx \
+-v /opt/docker-nginx/html:/usr/share/nginx/html \
+nginx
+```
+
+3.1.4 配置应用
 
 
 ```shell
-# 在/root目录下创建nginx目录用于存储nginx数据信息
-mkdir ~/nginx
-cd ~/nginx
-mkdir conf
-cd conf
-# 在~/nginx/conf/下创建nginx.conf文件,粘贴下面内容
+cd /opt/docker-nginx/conf.d
 vim nginx.conf
 ```
 ```shell
-
 user  nginx;
 worker_processes  1;
 
@@ -222,25 +208,6 @@ http {
 
 ```
 
-
-
-
-```shell
-docker run -id --name=c_nginx \
--p 80:80 \
--v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf \
--v $PWD/logs:/var/log/nginx \
--v $PWD/html:/usr/share/nginx/html \
-nginx
-```
-
-- 参数说明：
-  - **-p 80:80**：将容器的 80端口映射到宿主机的 80 端口。
-  - **-v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf**：将主机当前目录下的 /conf/nginx.conf 挂载到容器的 :/etc/nginx/nginx.conf。配置目录
-  - **-v $PWD/logs:/var/log/nginx**：将主机当前目录下的 logs 目录挂载到容器的/var/log/nginx。日志目录
-
-##### 3.1.4 使用外部机器访问nginx
-
 #### 3.2 通过Docker-Compose安装
 
 ##### 3.2.1 编写docker-compose.yml
@@ -266,32 +233,32 @@ services:
 docker-compose up -d
 ```
 
+
+
 ### 四、部署Redis
 
-#### 4.1 通过通过Docker直接安装
+#### 4.1 通过Docker直接安装
 
-##### 4.1.1 搜索redis镜像
+##### 4.1.1 搜索镜像
 
 ```shell
 docker search redis
 ```
 
-##### 4.1.2 拉取redis镜像
+##### 4.1.2 拉取镜像
 
 ```shell
 docker pull redis:5.0
 ```
 
-##### 4.1.3 创建容器，设置端口映射
+##### 4.1.3 部署应用
 
 ```shell
-docker run -id --name=c_redis -p 6379:6379 redis:5.0
-```
-
-##### 4.1.4 使用外部机器连接redis
-
-```shell
-./redis-cli.exe -h 192.168.149.135 -p 6379
+docker run \
+-d \
+--name=c_redis \
+-p 6379:6379 \
+redis:5.0
 ```
 
 #### 4.2 通过Docker-Compose安装
@@ -315,3 +282,73 @@ services:
 docker-compose up -d
 ```
 
+### 五、部署Elastisearch与Kibana
+
+#### 5.1 通过Docker-Compose安装
+
+```sh
+# 为了解决启动elasticsearch报错日志信息
+# max virtual memory areas vm.max_map_count 【65530】 is too low, increase to at least 【262144】
+# 修改宿主机的配置文件/etc/sysctl.conf
+vim /etc/sysctl.conf
+# 添加下面类型
+vm.max_map_count=655360
+# 执行下面的命令
+sysctl -p
+```
+
+##### 5.1.1 编写docker-compose.yml
+
+```yaml
+version: '3.1'
+services:
+  elasticsearch:
+    restart: always
+    image: elasticsearch:6.5.4
+    container_name: elasticsearch
+    ports:
+      - 9200:9200
+  kibana:
+    restart: always
+    image: kibana:6.5.4
+    container_name: kibana
+    ports:
+      - 5601:5601
+    environment:
+      - elasticsearch_url=http://192.168.3.123:9200
+    depends_on:
+      - elasticsearch
+```
+
+##### 5.1.2 通过docker-compose运行
+
+```sh
+docker-compose up -d
+```
+
+##### 5.1.3 安装IK分词器
+
+```text
+# IK分词器下载地址
+https://github.com/infinilabs/analysis-ik/releases/download/v6.5.4/elasticsearch-analysis-ik-6.5.4.zip
+```
+
+```
+# 将下载后zip上传到宿主机,然后通过unzip 命令解压,解压后再通过docker cp命令将解压后的文件夹复制到elasticsearch容器的/usr/share/elasticsearch/plugins这个目录下,然后通过docker restart 命令重启elasticsearch容器
+```
+
+解压
+
+![image-20240916193128462](../images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193128462.png)
+
+将解压后的文件夹复制到elasticsearch容器
+
+![image-20240916193216429](../images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193216429.png)
+
+重启elasticsearch容器
+
+![image-20240916193229497](../images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193229497.png)
+
+##### 5.1.4 测试
+
+![image-20240916193408575](../images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193408575.png)
