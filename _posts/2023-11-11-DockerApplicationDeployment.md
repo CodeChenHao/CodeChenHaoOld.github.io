@@ -352,3 +352,30 @@ https://github.com/infinilabs/analysis-ik/releases/download/v6.5.4/elasticsearch
 ##### 5.1.4 测试
 
 ![image-20240916193408575](/images/posts/2023-11-11-DockerApplicationDeployment/image-20240916193408575.png)
+
+### 六、部署RabbitMQ
+
+#### 6.1 通过Docker-Compose安装
+
+##### 6.1.1 编写docker-compose.yml
+
+```yaml
+version: '3.1'
+services:
+  rabbitmq:
+    restart: always
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - /opt/docker-rabbitmq/data:/var/lib/rabbitmq
+```
+
+##### 6.1.2 通过docker-compose运行
+
+```sh
+docker-compose up -d
+```
+
