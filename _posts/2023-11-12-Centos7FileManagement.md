@@ -2,7 +2,7 @@
 layout: post
 title: Centos7文件管理
 description: 与Centos7系统中文件管理相关的内容
-tags: 操作系统
+tags: Linux操作系统
 ---
 
 为什么企业喜欢选择Linux系统搭建服务器？
