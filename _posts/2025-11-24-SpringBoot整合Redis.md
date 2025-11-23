@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SpringBoot整合Redis
-description: SpringBoot整合Redis,以及封装RedisUtils工具类
+description: SpringBoot整合Redis
 tags: SpringBoot
 ---
 
