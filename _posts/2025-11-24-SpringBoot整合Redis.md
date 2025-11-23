@@ -11,7 +11,7 @@ tags: SpringBoot
 注: 该步骤,在后续整合其他技术的时候,不再单独操作。
 ```
 
-### ![image-20251123221342640](/images/posts/2025-11-24-SpringBoot整合Redis/image-20251123221342640.png)
+![image-20251123221342640](/images/posts/2025-11-24-SpringBoot整合Redis/image-20251123221342640.png)
 
 ![image-20251123221540745](/images/posts/2025-11-24-SpringBoot整合Redis/image-20251123221540745.png)
 
