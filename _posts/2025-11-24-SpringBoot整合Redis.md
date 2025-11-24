@@ -2,7 +2,7 @@
 layout: post
 title: SpringBoot整合Redis
 description: SpringBoot整合Redis
-tags: SpringBoot
+tags: Docker
 ---
 
 ## 一、创建空项目
